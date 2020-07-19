@@ -1,11 +1,12 @@
 module Api
   module V1
     class NotesController < ApplicationController
+      before_action :authorize_access_request! # , except: [:show, :index]
       before_action :set_note, only: [:show, :update, :destroy]
     
       # GET /notes
       def index
-        @notes = Note.all
+        @notes = current_user.records
     
         render json: @notes
       end
@@ -17,7 +18,7 @@ module Api
     
       # POST /notes
       def create
-        @note = Note.new(note_params)
+        @note = current_user.records.build(note_params)
     
         if @note.save
           render json: @note, status: :created, location: @note
@@ -43,12 +44,12 @@ module Api
       private
         # Use callbacks to share common setup or constraints between actions.
         def set_note
-          @note = Note.find(params[:id])
+          @note = current_user.records.find(params[:id])
         end
     
         # Only allow a trusted parameter "white list" through.
         def note_params
-          params.require(:note).permit(:content, :user_id)
+          params.require(:note).permit(:content)
         end
     end
   end
