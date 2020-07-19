@@ -19,7 +19,7 @@ Vue.use(VueAxios, {
 new Vue({
   el: '#app',
   router,
-  securedAxiosInstance, 
+  securedAxiosInstance,
   plainAxiosInstance,
   components: { App },
   template: '<App/>'
