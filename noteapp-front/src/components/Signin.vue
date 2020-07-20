@@ -25,6 +25,8 @@
 </template>
 
 <script>
+import $ from 'jquery'
+
 export default {
   name: 'Signin',
   data () {
@@ -42,9 +44,27 @@ export default {
   },
   methods: {
     signin() {
-      this.$http.plain.post('/signin', {email: this.email, password: this.password})
+      /*this.$http.plain.post('/signin', {email: this.email, password: this.password})
         .then(response => this.signinSuccessful(response))
-        .catch(error => this.signinFailed(error))
+        .catch(error => this.signinFailed(error))*/
+        let payload = {
+          email: this.email,
+          password: this.password
+        };
+        let context = this;
+        $.ajax({
+          url: "http://localhost:3000/signin",
+          method: "POST",
+          data: JSON.stringify(payload),
+          success(data) {
+            console.log("Login API success.")
+            context.signinSuccessful(data);
+          }, 
+          error(error) {
+            console.log("Login API failure.")
+            context.signinFailed(error);
+          }
+        })
     },
     signinSuccessful(response) {
       if(!response.data.csrf) {

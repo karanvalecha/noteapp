@@ -1,12 +1,13 @@
 import axios from 'axios'
 
-const API_URL = `https://${location.hostname}:8080`
+const API_URL = `http://${window.location.hostname}:3000` // Can change to https for heroku deploy
 
 const securedAxiosInstance = axios.create({
   baseURL: API_URL,
   withCredential: true,
   headers: {
-    'Content-Type': 'application/json'
+    'Content-Type': 'application/json',
+    'Access-Control-Allow-Origin': '*'
   }
 })
 
@@ -14,7 +15,8 @@ const plainAxiosInstance = axios.create({
   baseURL: API_URL,
   withCredential: true,
   headers: {
-    'Content-Type': 'application/json'
+    'Content-Type': 'application/json',
+    'Access-Control-Allow-Origin': '*'
   }
 })
 
