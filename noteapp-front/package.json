@@ -13,9 +13,11 @@
     "build": "node build/build.js"
   },
   "dependencies": {
+    "@vue/cli": "^4.4.6",
     "axios": "^0.19.2",
     "bootstrap": "^4.5.0",
     "bootstrap-vue": "^2.15.0",
+    "g": "^2.0.1",
     "jquery": "^3.5.1",
     "popper.js": "^1.16.1",
     "tailwindcss": "^1.5.1",
@@ -84,7 +86,8 @@
     "vue-template-compiler": "^2.5.2",
     "webpack": "^3.6.0",
     "webpack-bundle-analyzer": "^3.3.2",
-    "webpack-dev-server": "^3.1.11",
+    "webpack-cli": "^3.3.12",
+    "webpack-dev-server": "^2.9.7",
     "webpack-merge": "^4.1.0"
   },
   "engines": {
