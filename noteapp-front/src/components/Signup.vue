@@ -1,8 +1,8 @@
 <template>
   <div class="container">
     <div>
-      <h3>Sign In</h3>
-      <form @submit.prevent="signin">
+      <h3>Sign Up</h3>
+      <form @submit.prevent="signup">
         <!-- Error Div -->
         <div v-if="error">{{ error }}</div>
         <!-- Email -->
@@ -15,9 +15,14 @@
           <label for="password">Password: </label>
           <input type="password" v-model="password" id="password" placeholder="" class="form-control">
         </div>
-        <button type="submit" class="font-sans font-bold btn btn-primary">Sign In</button>
+        <!-- Password Confirmation -->
+        <div class="form-group">
+          <label for="password_confirmation">Confirm Password: </label>
+          <input type="password" v-model="password_confirmation" id="password_confirmation" placeholder="" class="form-control">
+        </div>
+        <button type="submit" class="font-sans font-bold btn btn-primary">Sign Un</button>
         <div class="">
-          <router-link to="/signup">Sign Up</router-link>
+          <router-link to="/">Sign In</router-link>
         </div>
       </form>
     </div>
@@ -28,11 +33,12 @@
 import $ from 'jquery'
 
 export default {
-  name: 'Signin',
+  name: 'Signup',
   data () {
     return {
       email: '',
       password: '',
+      password_confirmation: '',
       error: ''
     }
   },
@@ -46,19 +52,20 @@ export default {
     signin() {
         let payload = {
           email: this.email,
-          password: this.password
+          password: this.password,
+          password_confirmation: this.password_confirmation
         };
         let context = this;
         $.ajax({
-          url: "http://localhost:3000/signin",
+          url: "http://localhost:3000/signup",
           method: "POST",
           data: JSON.stringify(payload),
           success(data) {
-            console.log("Login API success.")
+            console.log("Register API success.")
             context.signinSuccessful(data);
           }, 
           error(error) {
-            console.log("Login API failure.")
+            console.log("Register API failure.")
             context.signinFailed(error);
           }
         })
@@ -74,7 +81,7 @@ export default {
       this.$router.replace('/notes')
     },
     signinFailed(error) {
-      this.error = (error.response && error.response.data && error.response.data.error) || ""
+      this.error = (error.response && error.response.data && error.response.data.error) || "Something went wrong"
       delete localStorage.csrf
       delete localStorage.signedIn
     },
