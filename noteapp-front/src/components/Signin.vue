@@ -64,11 +64,11 @@ export default {
         })
     },
     signinSuccessful(response) {
-      if(!response.data.csrf) {
+      if(!response.csrf) {
         this.signinFailed(response)
         return
       }
-      localStorage.csrf = response.data.csrf
+      localStorage.csrf = response.csrf
       localStorage.signedIn = true
       this.error = ''
       this.$router.replace('/notes')

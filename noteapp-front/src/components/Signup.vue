@@ -20,7 +20,7 @@
           <label for="password_confirmation">Confirm Password: </label>
           <input type="password" v-model="password_confirmation" id="password_confirmation" placeholder="" class="form-control">
         </div>
-        <button type="submit" class="font-sans font-bold btn btn-primary">Sign Un</button>
+        <button type="submit" class="font-sans font-bold btn btn-primary">Sign Up</button>
         <div class="">
           <router-link to="/">Sign In</router-link>
         </div>
@@ -49,7 +49,7 @@ export default {
     this.checkSignIn()
   },
   methods: {
-    signin() {
+    signup() {
         let payload = {
           email: this.email,
           password: this.password,
@@ -59,7 +59,7 @@ export default {
         $.ajax({
           url: "http://localhost:3000/signup",
           method: "POST",
-          data: JSON.stringify(payload),
+          data: payload,
           success(data) {
             console.log("Register API success.")
             context.signinSuccessful(data);
@@ -71,11 +71,11 @@ export default {
         })
     },
     signinSuccessful(response) {
-      if(!response.data.csrf) {
+      if(!response.csrf) {
         this.signinFailed(response)
         return
       }
-      localStorage.csrf = response.data.csrf
+      localStorage.csrf = response.csrf
       localStorage.signedIn = true
       this.error = ''
       this.$router.replace('/notes')
